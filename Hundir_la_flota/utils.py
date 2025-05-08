@@ -1,13 +1,26 @@
 import numpy as np
-import barcos
+import variables as vr
 
-
-def colocar_barcos(lista_barcos):    
+def crear_tablero ():
     tablero = np.full ((10,10), "_")
-    tablero_jugador = tablero
+    return (tablero)
+
+def colocar_barcos(tablero, lista_barcos):    
 
     for barco in lista_barcos:
         for i, j in barco:
-            tablero_jugador[i, j] = 'O'
+            tablero[i, j] = 'O'
 
+    return tablero
+
+def disparo(tablero):
+    fila = int(input ("Selecciona la fila"))
+    columna = int(input ("Selecciona la columna"))
+    
+    if tablero [fila,columna] == "O":
+        tablero [fila,columna] = "X"
+    elif tablero [fila,columna] == "#" or tablero [fila,columna] == "X":
+        print ("Disparo repetido")
+    else:
+        tablero [fila,columna] = "#"
     return tablero
