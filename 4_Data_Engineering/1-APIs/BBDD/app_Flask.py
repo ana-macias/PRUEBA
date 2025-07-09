@@ -1,10 +1,10 @@
 from flask import Flask, jsonify, request
-from datos_dummy import books
+from datos_dummy import books #-----MUY MUY IMPORTANTE-----
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-
+# Es la forma de definir los ENDPOINTS
 @app.route('/', methods=['GET'])
 def home():
     return "<h1>My second API</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
@@ -12,8 +12,8 @@ def home():
 # 1.Ruta para obtener todos los libros
 @app.route('/v0/books', methods=['GET'])
 def all_books():
-    return books
-    
+    return jsonify(books) 
+   
 # 2.Ruta para obtener un libro concreto mediante su id como parámetro en la llamada
 @app.route('/v0/book_id', methods=['GET'])
 def book_id():
@@ -62,11 +62,11 @@ def post_books_v2():
     books.append(book)
     return books
 
+
 # 7.Ruta para modificar un libro
 @app.route("/v3/books", methods=["PUT"])
 def put_book():
     id = int(request.args['id'])
-
     title = request.args.get('title', None)
     author = request.args.get('author', None)
 
@@ -88,4 +88,4 @@ def del_book():
             books.remove(book)
     return books
 
-app.run()
+app.run() 
