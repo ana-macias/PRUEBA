@@ -15,7 +15,7 @@ def get_all_books():
     conn.row_factory = sqlite3.Row  # Para obtener columnas con nombres
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM books")
+    cursor.execute("SELECT * FROM books") 
     rows = cursor.fetchall()
 
     books = [dict(row) for row in rows]
@@ -91,12 +91,14 @@ def add_book():
     cursor = conn.cursor()
     
     # Obtener datos del JSON enviado
-    nuevo_libro = request.get_json()
+    nuevo_libro = request.get_json(force=True)
     
     # Insertar directamente (¡sin validaciones!)
     cursor.execute(
-        "INSERT INTO books (title, author) VALUES (?, ?)",
-        (nuevo_libro['title'], nuevo_libro['author'])
+        "INSERT INTO books (author, first_sentence, id, published, title) VALUES (?, ?)",
+        (nuevo_libro['author'], nuevo_libro['first_sentence'], 
+         nuevo_libro['id'], nuevo_libro['published'], 
+         nuevo_libro['title'])
     )
     
     conn.commit()  # Guardar cambios
